@@ -93,4 +93,26 @@ const signin = async (req, res) => {
     }
 };
 
-module.exports = { signin, signup };
+const updatePassword = async (req, res) => {
+    try {
+        const {password} = req.body;
+        console.log(req.body.user.user._id);
+        if (password && password.length < 6) {
+            return res.json({
+                error: 'Password is required and should be min 6 characters long', 
+            });
+        } else {
+            const hashedPassword = await hashPassword(password);
+            const user = await User.findByIdAndUpdate(req.body.user.user._id, {
+                password: hashedPassword,
+            });
+            user.password = undefined;
+            user.secret = undefined;
+            return res.json(user);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+module.exports = { signin, signup, updatePassword };

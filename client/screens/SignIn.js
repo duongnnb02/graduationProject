@@ -46,7 +46,7 @@ const SignIn = ({navigation}) => {
                     <Text style={styles.buttonText}>Submit</Text>
                 </TouchableOpacity>
                 <Text style={{ fontSize: 12, textAlign: 'center' }}>Not yet registered? {" "}
-                    <Text style={{ color: 'orange', fontWeight: 'bold' }} onPress={() => navigation.navigate('SignUp')}>Sign Up</Text>
+                    <Text style={{ color: '#4169e1', fontWeight: 'bold' }} onPress={() => navigation.navigate('SignUp')}>Sign Up</Text>
                 </Text>
                 <Text style={{ fontSize: 12, textAlign: 'center', marginTop: 10 }}>Forgot Password?</Text>
             </View>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     buttonStyle: {
-        backgroundColor: 'orange',
+        backgroundColor: '#4169e1',
         height: 50,
         marginBottom: 20,
         justifyContent: 'center',
@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 20,
         textAlign: 'center',
-        color: 'fff',
-        textTransform: 'Inpercase',
+        color: '#fff',
+        textTransform: 'uppercase',
         fontWeight: 'bold'
     },
     imageContainer: {

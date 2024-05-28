@@ -50,7 +50,7 @@ const SignUp = ({navigation}) => {
                     <Text style={styles.buttonText}>Submit</Text>
                 </TouchableOpacity>
                 <Text style={{ fontSize: 12, textAlign: 'center' }}>Already Joined? {" "}
-                    <Text style={{color: 'orange', fontWeight: 'bold'}} onPress={() => navigation.navigate('SignIn')}>Sign In</Text>
+                    <Text style={{color: '#4169e1', fontWeight: 'bold'}} onPress={() => navigation.navigate('SignIn')}>Sign In</Text>
                 </Text>
             </View>
         </KeyboardAwareScrollView>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     buttonStyle: {
-        backgroundColor: 'orange',
+        backgroundColor: '#4169e1',
         height: 50,
         marginBottom: 20,
         justifyContent: 'center',
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 20,
         textAlign: 'center',
-        color: 'fff',
+        color: '#fff',
         textTransform: 'uppercase',
         fontWeight: 'bold'
     },

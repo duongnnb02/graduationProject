@@ -16,7 +16,7 @@ const HeaderTabs = () => {
     return (
         <SafeAreaView>
             <TouchableOpacity onPress={signOut}>
-                <FontAwesome5 name="share-square" size={25} color='orange' />
+                <FontAwesome5 name="share-square" size={25} color='#4169e1' />
             </TouchableOpacity>
         </SafeAreaView>
     )
