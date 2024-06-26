@@ -15,8 +15,8 @@ const App = () => {
 
   const fetchMonthlyEnergy = async () => {
     try {
-      const { data } = await axios.get('http://192.168.0.105:8000/api/get-monthlyenergy');
-      const latestData = data.slice(-12).reverse();
+      const { data } = await axios.get('http://172.20.10.3:8000/api/get-monthlyenergy');
+      const latestData = data.slice(-6).reverse();
       setMonthlyEnergyData(latestData);
     } catch (err) {
       console.error(err);
@@ -62,8 +62,8 @@ const App = () => {
           {monthlyEnergyData.map((item, index) => (
             <DataTable.Row key={index}>
               <DataTable.Cell style={styles.tableCell}><Text style={styles.tableCellText}>{month[item.month - 1] + ', ' + item.year}</Text></DataTable.Cell>
-              <DataTable.Cell numeric ><Text style={styles.tableCellText}>{Math.round(item.energyMonth) + ' kWh'}</Text></DataTable.Cell>
-              <DataTable.Cell numeric ><Text style={styles.tableCellText}>{Math.round(calculateBill(item.energyMonth)) + ' VND'}</Text></DataTable.Cell>
+              <DataTable.Cell numeric ><Text style={styles.tableCellText}>{Math.round(item.energyMonth1 + item.energyMonth2) + ' kWh'}</Text></DataTable.Cell>
+              <DataTable.Cell numeric ><Text style={styles.tableCellText}>{Math.round(calculateBill(item.energyMonth1 + item.energyMonth2)) + ' VND'}</Text></DataTable.Cell>
             </DataTable.Row>
           ))}
         </DataTable>

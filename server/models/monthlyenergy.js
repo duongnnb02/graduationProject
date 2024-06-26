@@ -2,12 +2,18 @@ const mongoose = require('mongoose');
 
 const monthlyEnergySchema = new mongoose.Schema(
     {
-        energyMonth: {
+        energyMonth1: {
+            type: Number,
+        },
+        energyMonth2: {
             type: Number,
         },
         month: {
             type: Number,
         },
+        year: {
+            type: Number,
+        }
     },
     {timestamps: true}
 );

@@ -6,6 +6,7 @@ import { LineChart, BarChart } from "react-native-chart-kit";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 const Home = () => {
     const [energyData, setEnergyData] = useState([]);
+    const [currentEnergy, setCurrentEnergy] = useState([]);
     const [monthlyEnergyData, setMonthlyEnergyData] = useState([]);
     const screenWidth = Dimensions.get("window").width;
     const chartConfig = {
@@ -26,16 +27,47 @@ const Home = () => {
         barPercentage: 0.5
     }
 
+    function calculateBill(kWh) {
+        const rates = [
+          { limit: 50, price: 1806 },
+          { limit: 100, price: 1866 },
+          { limit: 200, price: 2167 },
+          { limit: 300, price: 2729 },
+          { limit: 400, price: 3050 },
+          { limit: Infinity, price: 3151 }
+        ];
+    
+        let totalCost = 0;
+        let remainingkWh = kWh;
+    
+        for (let i = 0; i < rates.length; i++) {
+          let currentLimit = (i === 0) ? rates[i].limit : rates[i].limit - rates[i - 1].limit;
+    
+          if (remainingkWh > currentLimit) {
+            totalCost += currentLimit * rates[i].price;
+            remainingkWh -= currentLimit;
+          } else {
+            totalCost += remainingkWh * rates[i].price;
+            break;
+          }
+        }
+        return totalCost;
+      }
+
     useEffect(() => {
         fetchEnergy();
     }, []);
 
     const fetchEnergy = async () => {
         try {
-            const { data } = await axios.get('http://192.168.0.105:8000/api/get-energy');
-            const energyValues = data.slice(-8).map(item => item.energy);
-            console.log(energyValues);
-            setEnergyData(energyValues);
+            const { data } = await axios.get('http://172.20.10.3:8000/api/get-energy');
+            const energyValues1 = data.slice(-8).map(item => item.energy1);
+            const energyValues2 = data.slice(-8).map(item => item.energy2);
+            for (let i = 0; i < energyValues1.length; i++) energyValues1[i] += energyValues2[i];
+            const current = energyValues1[energyValues1.length-1];
+            console.log(current);
+            setCurrentEnergy(current);
+            setEnergyData(energyValues1);
         } catch (err) {
             console.error(err);
         }
@@ -47,10 +79,11 @@ const Home = () => {
 
     const fetchMonthlyEnergy = async () => {
         try {
-            const {data} = await axios.get('http://192.168.0.105:8000/api/get-monthlyenergy');
-            const monthlyEnergyValues = data.slice(-12).map(item => item.energyMonth);
-            console.log(monthlyEnergyValues);
-            setMonthlyEnergyData(monthlyEnergyValues);
+            const {data} = await axios.get('http://172.20.10.3:8000/api/get-monthlyenergy');
+            const monthlyEnergyValues1 = data.slice(-12).map(item => item.energyMonth1);
+            const monthlyEnergyValues2 = data.slice(-12).map(item => item.energyMonth2);
+            for (let i = 0; i < monthlyEnergyValues1.length; i++) monthlyEnergyValues1[i] += monthlyEnergyValues2[i];
+            setMonthlyEnergyData(monthlyEnergyValues1);
         } catch (err) {
             console.error(err);
         }
@@ -82,6 +115,9 @@ const Home = () => {
                         borderRadius: 16,
                     }}
                 /> : <Text>Loading</Text>}
+            </View>
+            <View style={{margin: 5}}>
+                <Text>- Energy cost of this month: {Math.round(calculateBill(currentEnergy))} VND</Text>
             </View>
             <View>
                 <Text style={styles.mainText}>Monthly Energy</Text>
@@ -120,7 +156,8 @@ const styles = StyleSheet.create({
     mainText: {
         fontSize: 30,
         textAlign: 'center',
-        marginTop: 5
+        marginTop: 5,
+        textTransform: 'uppercase',
     }
 })
 

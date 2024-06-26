@@ -17,7 +17,7 @@ const Devices = ({ navigation }) => {
     }, []);
 
     const fetchDevices = async () => {
-        const { data } = await axios.get('http://192.168.0.105:8000/api/get-device');
+        const { data } = await axios.get('http://172.20.10.3:8000/api/get-device');
         const devicesWithSwitchState = data.map(device => ({ ...device, isEnabled: false }));
         setDevices(devicesWithSwitchState);
     }
@@ -27,7 +27,7 @@ const Devices = ({ navigation }) => {
             return;
         }
         try {
-            const { data } = await axios.post('http://192.168.0.105:8000/api/add-device',
+            const { data } = await axios.post('http://172.20.10.3:8000/api/add-device',
                 { device }
             );
             console.log('data => ', data);

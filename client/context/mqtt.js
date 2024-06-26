@@ -34,7 +34,6 @@ const MQTTProvider = ({ children }) => {
 
         const onFailure = () => {
             console.log('Connect failed');
-            console.log(err);
             setStatus('failed');
         }
 
