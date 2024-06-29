@@ -15,7 +15,7 @@ const App = () => {
 
   const fetchMonthlyEnergy = async () => {
     try {
-      const { data } = await axios.get('http://172.20.10.3:8000/api/get-monthlyenergy');
+      const { data } = await axios.get('http://192.168.0.105:8000/api/get-monthlyenergy');
       const latestData = data.slice(-6).reverse();
       setMonthlyEnergyData(latestData);
     } catch (err) {
@@ -49,12 +49,25 @@ const App = () => {
     }
     return totalCost;
   }
+  function formatNumber(number) {
+    let numberStr = number.toString();
+    let formattedStr = '';
+
+    for (let i = numberStr.length - 1, count = 1; i >= 0; i--, count++) {
+      formattedStr = numberStr[i] + formattedStr;
+      if (count % 3 === 0 && i !== 0) {
+        formattedStr = '.' + formattedStr;
+      }
+    }
+
+    return formattedStr;
+  }
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <ScrollView style={{ marginVertical: 10 }} >
         <Text style={styles.mainText}>CONSUMPTION HISTORY</Text>
         <DataTable>
-          <DataTable.Header style={{backgroundColor: '#4169e1'}}>
+          <DataTable.Header style={{ backgroundColor: '#4169e1' }}>
             <DataTable.Title style={styles.tableHeader}><Text style={styles.tableHeaderText}>Time</Text></DataTable.Title>
             <DataTable.Title numeric ><Text style={styles.tableHeaderText}>Consumption</Text></DataTable.Title>
             <DataTable.Title numeric ><Text style={styles.tableHeaderText}>Cost</Text></DataTable.Title>
@@ -63,7 +76,7 @@ const App = () => {
             <DataTable.Row key={index}>
               <DataTable.Cell style={styles.tableCell}><Text style={styles.tableCellText}>{month[item.month - 1] + ', ' + item.year}</Text></DataTable.Cell>
               <DataTable.Cell numeric ><Text style={styles.tableCellText}>{Math.round(item.energyMonth1 + item.energyMonth2) + ' kWh'}</Text></DataTable.Cell>
-              <DataTable.Cell numeric ><Text style={styles.tableCellText}>{Math.round(calculateBill(item.energyMonth1 + item.energyMonth2)) + ' VND'}</Text></DataTable.Cell>
+              <DataTable.Cell numeric ><Text style={styles.tableCellText}>{formatNumber(Math.round(calculateBill(item.energyMonth1 + item.energyMonth2))) + ' VND'}</Text></DataTable.Cell>
             </DataTable.Row>
           ))}
         </DataTable>

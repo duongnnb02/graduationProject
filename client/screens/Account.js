@@ -27,7 +27,7 @@ const Account = () => {
             let storedData = await AsyncStorage.getItem('auth-rn');
             const user = JSON.parse(storedData);
             console.log(user);
-            const res = await axios.post('http://172.20.10.3:8000/api/update-password', {password, user});
+            const res = await axios.post('http://192.168.0.105:8000/api/update-password', {password, user});
             const data = res.data;
             if (data.error) alert(data.error);
             else {
@@ -50,7 +50,7 @@ const Account = () => {
                 <Text style={styles.roleText}>{role}</Text>
                 <View style={{ marginHorizontal: 24 }}>
                     <Text style={{ fontSize: 16, color: 'black' }}>PASSWORD</Text>
-                    <TextInput style={styles.signupInput} value={password} onChangeText={text => setPassword(text)} secureTextEntry={true} autoComplete="password" />
+                    <TextInput style={styles.signupInput} value={password} onChangeText={text => setPassword(text)} secureTextEntry={true} autoComplete="password" placeholder="Enter your new password here" />
                 </View>
                 <TouchableOpacity onPress={handleSubmit} style={styles.buttonStyle}>
                     <Text style={styles.buttonText}>Update Password</Text>

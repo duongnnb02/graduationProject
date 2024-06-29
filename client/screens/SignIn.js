@@ -6,7 +6,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../context/auth";
 
-const SignIn = ({navigation}) => {
+const SignIn = ({ navigation }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,14 +17,18 @@ const SignIn = ({navigation}) => {
             alert('All fields are required');
             return;
         }
-        const res = await axios.post('http://172.20.10.3:8000/api/signin', {email, password })
-        if (res.data.error)
-            console.log(res.data.error);
-        else {
-            setState(res.data)
-            await AsyncStorage.setItem('auth-rn', JSON.stringify(res.data));
-            alert("Sign In Successful");
-            navigation.navigate('Home');
+        try {
+            const res = await axios.post('http://192.168.0.105:8000/api/signin', { email, password })
+            if (res.data.error)
+                console.log(res.data.error);
+            else {
+                setState(res.data)
+                await AsyncStorage.setItem('auth-rn', JSON.stringify(res.data));
+                alert("Sign In Successful");
+                navigation.navigate('Home');
+            }
+        } catch (err) {
+            console.error(err);
         }
     }
     return (
@@ -33,14 +37,14 @@ const SignIn = ({navigation}) => {
                 <View style={styles.imageContainer}>
                     <Image source={require('../assets/logo.png')} style={styles.imageStyle} />
                 </View>
-                <Text style={styles.signInText}>SignIn</Text>
+                <Text style={styles.signInText}>Sign In</Text>
                 <View style={{ marginHorizontal: 24 }}>
                     <Text style={{ fontSize: 16, color: 'black' }}>EMAIL</Text>
-                    <TextInput style={styles.signInInput} value={email} onChangeText={text => setEmail(text)} autoComplete="email" keyboardType="email-address" />
+                    <TextInput style={styles.signInInput} value={email} onChangeText={text => setEmail(text)} autoComplete="email" keyboardType="email-address" placeholder="Enter your email here" />
                 </View>
                 <View style={{ marginHorizontal: 24 }}>
                     <Text style={{ fontSize: 16, color: 'black' }}>PASSWORD</Text>
-                    <TextInput style={styles.signInInput} value={password} onChangeText={text => setPassword(text)} secureTextEntry={true} autoComplete="password" />
+                    <TextInput style={styles.signInInput} value={password} onChangeText={text => setPassword(text)} secureTextEntry={true} autoComplete="password" placeholder="Enter your password here"/>
                 </View>
                 <TouchableOpacity onPress={handleSubmit} style={styles.buttonStyle}>
                     <Text style={styles.buttonText}>Submit</Text>
@@ -48,7 +52,7 @@ const SignIn = ({navigation}) => {
                 <Text style={{ fontSize: 12, textAlign: 'center' }}>Not yet registered? {" "}
                     <Text style={{ color: '#4169e1', fontWeight: 'bold' }} onPress={() => navigation.navigate('SignUp')}>Sign Up</Text>
                 </Text>
-                <Text style={{ fontSize: 12, textAlign: 'center', marginTop: 10 }}>Forgot Password?</Text>
+                <Text onPress={() => navigation.navigate("ForgotPassword")} style={styles.forgotText}>Forgot Password?</Text>
             </View>
         </KeyboardAwareScrollView>
     )
@@ -58,6 +62,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center'
+    },
+    forgotText: {
+        fontSize: 12,
+        textAlign: 'center',
+        marginTop: 10,
+        color: '#4169e1',
+        fontWeight: 'bold'
     },
     signInText: {
         fontSize: 30,

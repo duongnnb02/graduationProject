@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SignUp from "../screens/SignUp";
 import SignIn from "../screens/SignIn";
+import ForgotPassword from "../screens/ForgotPassword";
 import Home from "../screens/Home";
 import Account from "../screens/Account";
 import Devices from "../screens/Devices";
@@ -32,6 +33,7 @@ const NavigationScreen = () => {
                     <>
                         <Stack.Screen name="SignIn" component={SignIn} />
                         <Stack.Screen name="SignUp" component={SignUp} />
+                        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
                     </>
                 )
             }

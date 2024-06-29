@@ -75,8 +75,8 @@ void setup() {
       delay(2000);
     }
   }
-  client.subscribe("May1");
-  client.subscribe("May2");
+  client.subscribe("Lightbulb");
+  client.subscribe("Dryer");
 }
 
 void callback(char *topic, byte *payload, unsigned int length) {
@@ -89,7 +89,7 @@ void callback(char *topic, byte *payload, unsigned int length) {
     msg += (char)payload[i];
   }
   Serial.println();
-  if (String(topic) == "May1") {
+  if (String(topic) == "Lightbulb") {
     if (msg == "bat") {
       digitalWrite(Relay1, HIGH);
       Serial.println("Machine 1: on!");
@@ -99,7 +99,7 @@ void callback(char *topic, byte *payload, unsigned int length) {
     }
   }
 
-  if (String(topic) == "May2") {
+  if (String(topic) == "Dryer") {
     if (msg == "bat") {
       digitalWrite(Relay2, HIGH);
       Serial.println("Machine 2: on!");
@@ -131,7 +131,7 @@ void loop() {
   Serial.println(pzemP1);
   if (pzemP1 > 500) {
     digitalWrite(Relay1, LOW);
-    sendWarning("Warning: May1 is operating beyond its capacity!");
+    sendWarning("Warning: Lightbulb is operating beyond its capacity!");
   }
 
   // Lấy dữ liệu PZEM2
@@ -140,7 +140,7 @@ void loop() {
   Serial.println(pzemP2);
   if (pzemP2 > 500) {
     digitalWrite(Relay2, LOW);
-    sendWarning("Warning: May2 is operating beyond its capacity!");
+    sendWarning("Warning: Dryer is operating beyond its capacity!");
   }
 
   //Đóng gói dữ liệu

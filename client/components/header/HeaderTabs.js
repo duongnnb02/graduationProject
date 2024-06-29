@@ -1,4 +1,4 @@
-import { TouchableOpacity, SafeAreaView } from "react-native";
+import { TouchableOpacity, SafeAreaView, Button, Text } from "react-native";
 import React from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../context/auth";
@@ -15,8 +15,18 @@ const HeaderTabs = () => {
 
     return (
         <SafeAreaView>
-            <TouchableOpacity onPress={signOut}>
-                <FontAwesome5 name="share-square" size={25} color='#4169e1' />
+            <TouchableOpacity onPress={signOut} style={{
+                backgroundColor: 'black',
+                justifyContent: 'center',
+                borderRadius: 10,
+                height: 40,
+                width: 90
+            }}>
+                <Text style={{
+                    textAlign: 'center',
+                    color: '#fff',
+                    textTransform: 'uppercase',
+                }}>Sign Out</Text>
             </TouchableOpacity>
         </SafeAreaView>
     )

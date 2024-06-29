@@ -9,7 +9,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 const Devices = ({ navigation }) => {
     const [device, setDevice] = useState('');
     const [devices, setDevices] = useContext(DeviceContext);
-    const [isEnabled, setIsEnabled] = useState(false);
+    const [isEnabled, setIsEnabled] = useState(true);
     const {client} = useContext(MQTTContext);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const Devices = ({ navigation }) => {
     }, []);
 
     const fetchDevices = async () => {
-        const { data } = await axios.get('http://172.20.10.3:8000/api/get-device');
+        const { data } = await axios.get('http://192.168.0.105:8000/api/get-device');
         const devicesWithSwitchState = data.map(device => ({ ...device, isEnabled: false }));
         setDevices(devicesWithSwitchState);
     }
@@ -27,7 +27,7 @@ const Devices = ({ navigation }) => {
             return;
         }
         try {
-            const { data } = await axios.post('http://172.20.10.3:8000/api/add-device',
+            const { data } = await axios.post('http://192.168.0.105:8000/api/add-device',
                 { device }
             );
             console.log('data => ', data);
@@ -69,13 +69,13 @@ const Devices = ({ navigation }) => {
     return (
         <KeyboardAwareScrollView contentContainerStyle={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Text style={styles.mainText}>ADD DEVICES</Text>
+                <Text style={styles.mainText}>DEVICES LIST</Text>
                 <View style={{ marginHorizontal: 24 }}>
                     <Text style={{ fontSize: 16, color: '#151b54', marginTop: 5 }}>DEVICE NAME</Text>
                     <TextInput style={styles.signupInput} value={device} onChangeText={text => setDevice(text)} autoCapitalize="none" autoCorrect={false} placeholder="Enter device name" />
                 </View>
                 <TouchableOpacity onPress={handleSubmit} style={styles.buttonStyle}>
-                    <Text style={styles.buttonText}>Submit</Text>
+                    <Text style={styles.buttonText}>Add new device</Text>
                 </TouchableOpacity>
 
                 {devices && devices.map(item => (
