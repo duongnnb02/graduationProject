@@ -9,7 +9,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 const Devices = ({ navigation }) => {
     const [device, setDevice] = useState('');
     const [devices, setDevices] = useContext(DeviceContext);
-    const [isEnabled, setIsEnabled] = useState(true);
+    const [isEnabled, setIsEnabled] = useState(false);
     const {client} = useContext(MQTTContext);
 
     useEffect(() => {

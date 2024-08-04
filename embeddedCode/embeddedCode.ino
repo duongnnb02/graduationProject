@@ -1,4 +1,4 @@
-#define Relay1 25
+#define Relay1 27
 #define Relay2 21
 
 #include <WiFi.h>
@@ -15,11 +15,11 @@ const char *password = "tumotdenchin";
 const char *mqtt_broker = "broker.emqx.io";
 const int mqtt_port = 1883;
 
-// Biến đếm thời gian 3 phút
+// Biến đếm thời gian 3 giờ
 unsigned long previousMillis = 0;
 const long interval = 10800000;
 
-// Biến đếm thời gian 1 tiếng
+// Biến đếm thời gian 1 tháng
 unsigned long lastResetMillis = 0;
 const long resetInterval = 2629746000;
 
@@ -35,7 +35,7 @@ DynamicJsonDocument doc(1024);
 DynamicJsonDocument docMonth(1024);
 
 // PZEM của Dương
-PZEM004Tv30 pzem1(&Serial1, 27, 26);
+PZEM004Tv30 pzem1(&Serial1, 26, 25);
 // PZEM của Thu
 PZEM004Tv30 pzem2(&Serial2, 19, 18);
 

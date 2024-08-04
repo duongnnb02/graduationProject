@@ -12,7 +12,7 @@ const ForgotPassword = ({ navigation }) => {
                 <View style={styles.imageContainer}>
                     <Image source={require('../assets/logo.png')} style={styles.imageStyle} />
                 </View>
-                <Text style={styles.signupText}>ForgotPassword</Text>
+                <Text style={styles.signupText}>Forgot Password</Text>
                 <View style={{ marginHorizontal: 24 }}>
                     <Text style={{ fontSize: 16, color: 'black' }}>EMAIL</Text>
                     <TextInput style={styles.signupInput} value={email} onChangeText={text => setEmail(text)} autoComplete="email" keyboardType="email-address" placeholder="Enter your email here" />
